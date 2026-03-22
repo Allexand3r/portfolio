@@ -1,0 +1,297 @@
+/* ============================================
+   PARROT OS PORTFOLIO - Window Styles
+   ============================================ */
+
+/* Window Base */
+.window {
+    position: absolute;
+    background: rgba(26, 26, 46, 0.95);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    border-radius: 8px;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 255, 204, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+    min-width: 300px;
+    min-height: 200px;
+}
+
+.window.hidden {
+    display: none;
+}
+
+.window.minimized {
+    display: none;
+}
+
+.window.active {
+    border-color: rgba(0, 255, 204, 0.5);
+    box-shadow: 
+        0 15px 50px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(0, 255, 204, 0.2);
+}
+
+.window.maximized {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - var(--taskbar-height)) !important;
+    border-radius: 0;
+}
+
+/* Window Header */
+.window-header {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: linear-gradient(180deg, rgba(30, 30, 50, 0.9) 0%, rgba(20, 20, 40, 0.95) 100%);
+    border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+    cursor: move;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+/* Window Controls (macOS style) */
+.window-controls {
+    display: flex;
+    gap: 8px;
+    margin-right: 12px;
+}
+
+.window-btn {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.window-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.window-btn.close {
+    background: #ff5f57;
+}
+
+.window-btn.close:hover {
+    background: #ff3b30;
+}
+
+.window-btn.close::before {
+    content: '×';
+    font-size: 12px;
+    color: #8b0000;
+    line-height: 1;
+}
+
+.window-btn.minimize {
+    background: #febc2e;
+}
+
+.window-btn.minimize:hover {
+    background: #f5a623;
+}
+
+.window-btn.minimize::before {
+    content: '−';
+    font-size: 12px;
+    color: #8b6914;
+    line-height: 1;
+}
+
+.window-btn.maximize {
+    background: #28c840;
+}
+
+.window-btn.maximize:hover {
+    background: #1db954;
+}
+
+.window-btn.maximize::before {
+    content: '+';
+    font-size: 10px;
+    color: #0d5c1a;
+    line-height: 1;
+}
+
+.window-controls:hover .window-btn::before {
+    opacity: 1;
+}
+
+/* Window Title */
+.window-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Window Content */
+.window-content {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+}
+
+/* Resize Handle */
+.window::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    cursor: se-resize;
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        rgba(0, 255, 204, 0.3) 50%
+    );
+    border-radius: 0 0 8px 0;
+}
+
+/* Dragging State */
+.window.dragging {
+    opacity: 0.9;
+    cursor: move;
+}
+
+.window.dragging .window-content {
+    pointer-events: none;
+}
+
+/* Resizing State */
+.window.resizing {
+    opacity: 0.9;
+}
+
+.window.resizing .window-content {
+    pointer-events: none;
+}
+
+/* Focus Ring Animation */
+.window.active::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 1px solid var(--accent-cyan);
+    border-radius: 10px;
+    opacity: 0;
+    animation: focusPulse 2s infinite;
+    pointer-events: none;
+}
+
+@keyframes focusPulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.3; }
+}
+
+/* ============================================
+   FILE MANAGER STYLES
+   ============================================ */
+
+/* Navigation Bar */
+.file-manager-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+.nav-btn {
+    padding: 6px 12px;
+    background: rgba(0, 255, 204, 0.1);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    border-radius: 4px;
+    color: var(--accent-cyan);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: rgba(0, 255, 204, 0.2);
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.nav-path {
+    flex: 1;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+}
+
+/* Folder Grid */
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.folder-item:hover {
+    background: rgba(0, 255, 204, 0.1);
+}
+
+.folder-icon {
+    font-size: 48px;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.3));
+}
+
+.folder-name {
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Projects View */
+.projects-view {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.projects-view.hidden {
+    display: none;
+}

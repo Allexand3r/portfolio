@@ -1,0 +1,603 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParrotOS Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/desktop.css">
+    <link rel="stylesheet" href="css/windows.css">
+    <link rel="stylesheet" href="css/taskbar.css">
+    <link rel="stylesheet" href="css/terminal.css">
+</head>
+<body>
+    <!-- Desktop -->
+    <div class="desktop" id="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons" id="desktop-icons">
+            <div class="desktop-icon" data-window="terminal">
+                <div class="icon-image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="18" rx="2"/>
+                        <path d="M7 8l4 4-4 4"/>
+                        <line x1="13" y1="16" x2="17" y2="16"/>
+                    </svg>
+                </div>
+                <span class="icon-label">Terminal</span>
+            </div>
+            
+            <div class="desktop-icon" data-window="projects">
+                <div class="icon-image folder">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2 6a2 2 0 012-2h5l2 2h9a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/>
+                    </svg>
+                </div>
+                <span class="icon-label">My Projects</span>
+            </div>
+            
+            <div class="desktop-icon" data-window="about">
+                <div class="icon-image file">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10,9 9,9 8,9"/>
+                    </svg>
+                </div>
+                <span class="icon-label">About.txt</span>
+            </div>
+            
+            <div class="desktop-icon" data-window="skills">
+                <div class="icon-image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16,18 22,12 16,6"/>
+                        <polyline points="8,6 2,12 8,18"/>
+                    </svg>
+                </div>
+                <span class="icon-label">Skills.sh</span>
+            </div>
+            
+            <div class="desktop-icon" data-window="contact">
+                <div class="icon-image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <span class="icon-label">Contact</span>
+            </div>
+        </div>
+        
+        <!-- Windows Container -->
+        <div class="windows-container" id="windows-container">
+            <!-- Terminal Window (открыто по умолчанию) -->
+            <div class="window active" id="window-terminal" data-window="terminal" style="width: 700px; height: 450px; left: 100px; top: 50px;">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <button class="window-btn close" data-action="close"></button>
+                        <button class="window-btn minimize" data-action="minimize"></button>
+                        <button class="window-btn maximize" data-action="maximize"></button>
+                    </div>
+                    <div class="window-title">
+                        <span>root@parrot:~</span>
+                    </div>
+                </div>
+                <div class="window-content terminal-content" id="terminal">
+                    <div class="terminal-output" id="terminal-output"></div>
+                    <div class="terminal-input-line">
+                        <span class="terminal-prompt">┌──(root㉿parrot)-[~]</span>
+                        <div class="terminal-input-row">
+                            <span class="terminal-prompt-arrow">└─# </span>
+                            <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Window -->
+            <div class="window hidden" id="window-projects" data-window="projects" style="width: 750px; height: 520px; left: 180px; top: 60px;">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <button class="window-btn close" data-action="close"></button>
+                        <button class="window-btn minimize" data-action="minimize"></button>
+                        <button class="window-btn maximize" data-action="maximize"></button>
+                    </div>
+                    <div class="window-title">
+                        <span>📁 My Projects</span>
+                    </div>
+                </div>
+                <div class="window-content file-manager">
+                    <!-- Navigation Bar -->
+                    <div class="file-manager-nav">
+                        <button class="nav-btn" id="projects-back" disabled>← Back</button>
+                        <div class="nav-path" id="projects-path">~/projects</div>
+                    </div>
+                    
+                    <!-- Main Folders View -->
+                    <div class="projects-view" id="projects-main">
+                        <div class="folder-grid">
+                            <div class="folder-item" data-folder="telegram-bots">
+                                <div class="folder-icon">📁</div>
+                                <span class="folder-name">telegram-bots/</span>
+                            </div>
+                            <div class="folder-item" data-folder="scrapers">
+                                <div class="folder-icon">📁</div>
+                                <span class="folder-name">scrapers-parsers/</span>
+                            </div>
+                            <div class="folder-item" data-folder="apps">
+                                <div class="folder-icon">📁</div>
+                                <span class="folder-name">apps/</span>
+                            </div>
+                            <div class="folder-item" data-folder="crypto">
+                                <div class="folder-icon">📁</div>
+                                <span class="folder-name">crypto-projects/</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Telegram Bots Folder -->
+                    <div class="projects-view hidden" id="projects-telegram-bots">
+                        <div class="projects-grid">
+                            <div class="project-card">
+                                <h3>🚬 Vape Shop Bot</h3>
+                                <p>E-commerce Telegram bot for vape shop with catalog, cart, and payment integration</p>
+                                <div class="project-tech">
+                                    <span>Python</span>
+                                    <span>aiogram</span>
+                                    <span>PostgreSQL</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>📢 Auto Poster</h3>
+                                <p>Automated content posting and cross-channel reposting bot with scheduling</p>
+                                <div class="project-tech">
+                                    <span>Python</span>
+                                    <span>aiogram</span>
+                                    <span>Celery</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>📊 Pump & Dump Tracker</h3>
+                                <p>Real-time cryptocurrency pump/dump alerts with volume analysis</p>
+                                <div class="project-tech">
+                                    <span>Python</span>
+                                    <span>WebSocket</span>
+                                    <span>Binance API</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>🔮 Horoscope Bot</h3>
+                                <p>Personalized daily horoscopes based on birthdate and zodiac sign</p>
+                                <div class="project-tech">
+                                    <span>Python</span>
+                                    <span>aiogram</span>
+                                    <span>SQLAlchemy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scrapers & Parsers Folder -->
+                    <div class="projects-view hidden" id="projects-scrapers">
+                        <div class="projects-grid">
+                            <div class="project-card">
+                                <h3>🕷️ Multi-Site Scraper</h3>
+                                <p>High-performance web scraper for extracting structured data from multiple sources</p>
+                                <div class="project-tech">
+                                    <span>Go</span>
+                                    <span>Colly</span>
+                                    <span>PostgreSQL</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>🔌 WebSocket Data Stream</h3>
+                                <p>Real-time data collection via WebSocket connections with auto-reconnect</p>
+                                <div class="project-tech">
+                                    <span>Go</span>
+                                    <span>gorilla/websocket</span>
+                                    <span>Redis</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>🌐 Browser Automation</h3>
+                                <p>Chromium-based automation for dynamic content extraction</p>
+                                <div class="project-tech">
+                                    <span>Node.js</span>
+                                    <span>Puppeteer</span>
+                                    <span>Chromium</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>⚡ API Data Parser</h3>
+                                <p>Fast JSON/XML parser for high-volume API data processing</p>
+                                <div class="project-tech">
+                                    <span>Go</span>
+                                    <span>gjson</span>
+                                    <span>ClickHouse</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Apps Folder -->
+                    <div class="projects-view hidden" id="projects-apps">
+                        <div class="projects-grid">
+                            <div class="project-card">
+                                <h3>🔮 Horoscope App</h3>
+                                <p>Mobile-friendly horoscope application with daily predictions and compatibility</p>
+                                <div class="project-tech">
+                                    <span>React</span>
+                                    <span>Node.js</span>
+                                    <span>MongoDB</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>🤖 AI Companion</h3>
+                                <p>AI-powered chat companion using GPT for emotional support conversations</p>
+                                <div class="project-tech">
+                                    <span>Python</span>
+                                    <span>OpenAI API</span>
+                                    <span>FastAPI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Crypto Projects Folder -->
+                    <div class="projects-view hidden" id="projects-crypto">
+                        <div class="projects-grid">
+                            <div class="project-card">
+                                <h3>💹 Arbitrage Bot</h3>
+                                <p>Cross-exchange arbitrage bot with fee calculation, auto-transfer and execution</p>
+                                <div class="project-tech">
+                                    <span>Go</span>
+                                    <span>Binance API</span>
+                                    <span>Bybit API</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>📈 Portfolio Tracker</h3>
+                                <p>Real-time crypto portfolio tracking with P&L analytics and alerts</p>
+                                <div class="project-tech">
+                                    <span>C#</span>
+                                    <span>ASP.NET Core</span>
+                                    <span>WebSocket</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>🔔 Price Alert System</h3>
+                                <p>Multi-exchange price monitoring with Telegram notifications</p>
+                                <div class="project-tech">
+                                    <span>Python</span>
+                                    <span>ccxt</span>
+                                    <span>Redis</span>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h3>📊 Market Analyzer</h3>
+                                <p>Technical analysis tools with volume, RSI, and trend detection</p>
+                                <div class="project-tech">
+                                    <span>Python</span>
+                                    <span>pandas</span>
+                                    <span>TA-Lib</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- About Window -->
+            <div class="window hidden" id="window-about" data-window="about" style="width: 550px; height: 400px; left: 250px; top: 120px;">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <button class="window-btn close" data-action="close"></button>
+                        <button class="window-btn minimize" data-action="minimize"></button>
+                        <button class="window-btn maximize" data-action="maximize"></button>
+                    </div>
+                    <div class="window-title">
+                        <span>📄 About.txt - Text Editor</span>
+                    </div>
+                </div>
+                <div class="window-content text-editor">
+                    <pre class="about-text">
+╔══════════════════════════════════════════════════════════╗
+║                      ABOUT ME                            ║
+╚══════════════════════════════════════════════════════════╝
+
+> Name: Oleksandr Zachepa
+> Location: Bucharest, Romania (Remote)
+> Status: Full Stack Engineer @ NDA
+> Experience: 2+ years
+
+╔══════════════════════════════════════════════════════════╗
+║                    WHO AM I?                             ║
+╚══════════════════════════════════════════════════════════╝
+
+Full Stack Engineer with 2+ years of experience in backend
+development, automation, and data engineering.
+
+Proficient in C#, Python, Go, and Node.js. Experienced in
+building RESTful APIs, automation tools, web scrapers, and
+working with Chromium internals.
+
+Strong background in ASP.NET Core, PostgreSQL, and
+microservices architecture.
+
+╔══════════════════════════════════════════════════════════╗
+║                   INTERESTS                              ║
+╚══════════════════════════════════════════════════════════╝
+
+• Backend Development & APIs
+• Web Scraping & Automation
+• Browser Engineering (Chromium)
+• Microservices Architecture
+• Clean Code & SOLID Principles
+
+╔══════════════════════════════════════════════════════════╗
+║                   LANGUAGES                              ║
+╚══════════════════════════════════════════════════════════╝
+
+• Ukrainian - Native
+• English - B2 (Upper-Intermediate)
+• Russian - Fluent
+
+[EOF]</pre>
+                </div>
+            </div>
+            
+            <!-- Skills Window -->
+            <div class="window hidden" id="window-skills" data-window="skills" style="width: 500px; height: 450px; left: 300px; top: 80px;">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <button class="window-btn close" data-action="close"></button>
+                        <button class="window-btn minimize" data-action="minimize"></button>
+                        <button class="window-btn maximize" data-action="maximize"></button>
+                    </div>
+                    <div class="window-title">
+                        <span>⚡ Skills.sh - Execution</span>
+                    </div>
+                </div>
+                <div class="window-content skills-content">
+                    <div class="skills-terminal">
+                        <div class="skill-category">
+                            <span class="category-title">// Languages</span>
+                            <div class="skill-bar">
+                                <span class="skill-name">Go</span>
+                                <div class="bar"><div class="fill" style="width: 90%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">Python</span>
+                                <div class="bar"><div class="fill" style="width: 85%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">C# / .NET</span>
+                                <div class="bar"><div class="fill" style="width: 80%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">Node.js</span>
+                                <div class="bar"><div class="fill" style="width: 75%"></div></div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <span class="category-title">// Backend & Databases</span>
+                            <div class="skill-bar">
+                                <span class="skill-name">ASP.NET Core</span>
+                                <div class="bar"><div class="fill" style="width: 90%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">PostgreSQL</span>
+                                <div class="bar"><div class="fill" style="width: 85%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">EF Core / Dapper</span>
+                                <div class="bar"><div class="fill" style="width: 85%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">REST API / WebSocket</span>
+                                <div class="bar"><div class="fill" style="width: 90%"></div></div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <span class="category-title">// Tools & DevOps</span>
+                            <div class="skill-bar">
+                                <span class="skill-name">Git / GitHub</span>
+                                <div class="bar"><div class="fill" style="width: 90%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">Docker</span>
+                                <div class="bar"><div class="fill" style="width: 70%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">Chromium / depot_tools</span>
+                                <div class="bar"><div class="fill" style="width: 65%"></div></div>
+                            </div>
+                            <div class="skill-bar">
+                                <span class="skill-name">Web Scraping</span>
+                                <div class="bar"><div class="fill" style="width: 85%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Window -->
+            <div class="window hidden" id="window-contact" data-window="contact" style="width: 450px; height: 350px; left: 350px; top: 150px;">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <button class="window-btn close" data-action="close"></button>
+                        <button class="window-btn minimize" data-action="minimize"></button>
+                        <button class="window-btn maximize" data-action="maximize"></button>
+                    </div>
+                    <div class="window-title">
+                        <span>📧 Contact</span>
+                    </div>
+                </div>
+                <div class="window-content contact-content">
+                    <div class="contact-terminal">
+                        <div class="contact-line">
+                            <span class="contact-prompt">$</span>
+                            <span class="contact-cmd">cat contacts.txt</span>
+                        </div>
+                        <div class="contact-output">
+                            <div class="contact-item">
+                                <span class="contact-icon">📧</span>
+                                <span class="contact-label">Email:</span>
+                                <a href="mailto:ssoooxander@gmail.com">ssoooxander@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">💼</span>
+                                <span class="contact-label">LinkedIn:</span>
+                                <a href="https://www.linkedin.com/in/oleksandr-zachepa/">oleksandr-zachepa</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">🐙</span>
+                                <span class="contact-label">GitHub:</span>
+                                <a href="https://github.com/ssoooxander">github.com/ssoooxander</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">📍</span>
+                                <span class="contact-label">Location:</span>
+                                <span>Bucharest, Romania (Remote)</span>
+                            </div>
+                        </div>
+                        <div class="contact-line">
+                            <span class="contact-prompt">$</span>
+                            <span class="cursor">█</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Context Menu -->
+        <div class="context-menu" id="context-menu">
+            <div class="context-menu-item" data-action="open-terminal">
+                <span class="context-icon">💻</span>
+                <span>Открыть терминал</span>
+            </div>
+            <div class="context-menu-item" data-action="open-projects">
+                <span class="context-icon">📁</span>
+                <span>My Projects</span>
+            </div>
+            <div class="context-menu-divider"></div>
+            <div class="context-menu-item" data-action="refresh">
+                <span class="context-icon">🔄</span>
+                <span>Обновить</span>
+            </div>
+            <div class="context-menu-item" data-action="settings">
+                <span class="context-icon">⚙️</span>
+                <span>Настройки</span>
+            </div>
+            <div class="context-menu-divider"></div>
+            <div class="context-menu-item" data-action="about-system">
+                <span class="context-icon">ℹ️</span>
+                <span>О системе</span>
+            </div>
+        </div>
+        
+        <!-- Selection Box -->
+        <div class="selection-box" id="selection-box"></div>
+    </div>
+    
+    <!-- Start Menu -->
+    <div class="start-menu" id="start-menu">
+        <div class="start-menu-header">
+            <div class="start-menu-avatar">🦜</div>
+            <div class="start-menu-user">
+                <h3>root</h3>
+                <span>parrot@security</span>
+            </div>
+        </div>
+        <div class="start-menu-search">
+            <input type="text" placeholder="Поиск..." id="start-search">
+        </div>
+        <div class="start-menu-apps">
+            <div class="start-menu-app" data-window="terminal">
+                <span class="start-menu-app-icon">💻</span>
+                <span class="start-menu-app-name">Terminal</span>
+            </div>
+            <div class="start-menu-app" data-window="projects">
+                <span class="start-menu-app-icon">📁</span>
+                <span class="start-menu-app-name">Projects</span>
+            </div>
+            <div class="start-menu-app" data-window="about">
+                <span class="start-menu-app-icon">📄</span>
+                <span class="start-menu-app-name">About</span>
+            </div>
+            <div class="start-menu-app" data-window="skills">
+                <span class="start-menu-app-icon">⚡</span>
+                <span class="start-menu-app-name">Skills</span>
+            </div>
+            <div class="start-menu-app" data-window="contact">
+                <span class="start-menu-app-icon">📧</span>
+                <span class="start-menu-app-name">Contact</span>
+            </div>
+            <div class="start-menu-app" data-action="neofetch">
+                <span class="start-menu-app-icon">🖥️</span>
+                <span class="start-menu-app-name">Neofetch</span>
+            </div>
+        </div>
+        <div class="start-menu-footer">
+            <div class="start-menu-footer-item" data-action="lock">
+                <span>🔒</span>
+                <span>Lock</span>
+            </div>
+            <div class="start-menu-footer-item" data-action="shutdown">
+                <span>⏻</span>
+                <span>Shutdown</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Calendar Popup -->
+    <div class="calendar-popup" id="calendar-popup">
+        <div class="calendar-header">
+            <button class="calendar-nav" id="cal-prev">❮</button>
+            <span class="calendar-title" id="calendar-title"></span>
+            <button class="calendar-nav" id="cal-next">❯</button>
+        </div>
+        <div class="calendar-weekdays">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+        </div>
+        <div class="calendar-days" id="calendar-days"></div>
+        <div class="calendar-time" id="calendar-time"></div>
+    </div>
+    
+    <!-- Taskbar -->
+    <div class="taskbar" id="taskbar">
+        <div class="taskbar-left">
+            <button class="start-btn" id="start-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <circle cx="12" cy="12" r="10"/>
+                </svg>
+            </button>
+        </div>
+        <div class="taskbar-center" id="taskbar-windows">
+            <!-- Открытые окна будут добавляться сюда -->
+        </div>
+        <div class="taskbar-right">
+            <div class="system-tray">
+                <span class="tray-icon" title="Network">🔒</span>
+                <span class="tray-icon" title="VPN Active">🛡️</span>
+            </div>
+            <div class="datetime" id="datetime">
+                <span class="time"></span>
+                <span class="date"></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/window-manager.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/desktop.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
